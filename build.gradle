@@ -1,0 +1,21 @@
+apply plugin: 'java-library'
+apply plugin: 'war'
+apply plugin: 'java'
+apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    api 'org.apache.commons:commons-math3:3.6.1'
+    implementation 'com.google.guava:guava:21.0'
+    testImplementation 'junit:junit:4.12'
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile 'com.google.code.gson:gson:2.8.2'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.18'
+}
+
+gretty {
+	managedClassReload=true
+}
