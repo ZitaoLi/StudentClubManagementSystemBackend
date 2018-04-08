@@ -8,6 +8,11 @@ public class User {
 	private String studentCode;
 	private String password;
 	private String email;
+	private String phoneNumber;
+	private String name;
+	private String selfIntroduction;
+	private String headerImagePath;
+	private Timestamp createdTime;
 	
 	public int getId() {
 		return id;
@@ -63,9 +68,12 @@ public class User {
 	public void setCreatedTime(Timestamp createdTime) {
 		this.createdTime = createdTime;
 	}
-	private String phoneNumber;
-	private String name;
-	private String selfIntroduction;
-	private String headerImagePath;
-	private Timestamp createdTime;
+	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", studentCode=" + studentCode + ", password=" + password + ", email=" + email
+				+ ", phoneNumber=" + phoneNumber + ", name=" + name + ", selfIntroduction=" + selfIntroduction
+				+ ", headerImagePath=" + headerImagePath + ", createdTime=" + createdTime + "]";
+	}
+	
 }

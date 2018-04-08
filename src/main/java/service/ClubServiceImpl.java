@@ -28,6 +28,12 @@ public class ClubServiceImpl implements ClubService {
 	}
 
 	@Override
+	public Club findByName(String clubName) {
+		ClubDAOImpl clubDAOImpl = (ClubDAOImpl) DAOFactory.getDAOImpl("ClubDAOImpl");
+		return clubDAOImpl.findByName(clubName);
+	}
+
+	@Override
 	public boolean add(Club club) {
 		ClubDAOImpl clubDAOImpl = (ClubDAOImpl) DAOFactory.getDAOImpl("ClubDAOImpl");
 		boolean res = clubDAOImpl.add(club);
@@ -90,6 +96,20 @@ public class ClubServiceImpl implements ClubService {
 		out.close();
 	}
 
+	@Override
+	public void backJson(HttpServletRequest req, HttpServletResponse resp, String json) throws Exception {
+		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
+		resp.setContentType("application/json");
+		
+		System.out.println(json);
+		
+		PrintWriter out = null;
+		out = resp.getWriter();
+		out.write(json);
+		out.close();
+	}
+	
 }
 
 

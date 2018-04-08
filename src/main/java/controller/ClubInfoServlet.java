@@ -37,9 +37,26 @@ public class ClubInfoServlet extends HttpServlet {
 		
 		ClubServiceImpl clubServiceImpl = (ClubServiceImpl) ServiceFactory.loadServiceImpl("ClubServiceImpl");
 		try {
-			int clubId = Integer.parseInt(req.getParameter("club_id"));
-			Club club = clubServiceImpl.findById(clubId);
-			clubServiceImpl.backSingleClubWithJson(req, resp, club);
+			String clubId = req.getParameter("club_id");
+			String clubName = req.getParameter("club_name");
+			System.out.println("club_id: " + clubId);
+			System.out.println("club_name: " + clubName);
+			if (clubId == null && clubName != null) {
+				// TODO 根据club_name查找
+				Club club = clubServiceImpl.findByName(clubName);
+				if (club == null) {
+					// 返回0表示社团不存在
+					clubServiceImpl.backJson(req, resp, "0");
+				} else {
+					clubServiceImpl.backSingleClubWithJson(req, resp, club);
+				}
+			} else if (clubId != null) {
+				// TODO 根据club_id查找
+				int id = Integer.parseInt(clubId);
+				Club club = clubServiceImpl.findById(id);
+				clubServiceImpl.backSingleClubWithJson(req, resp, club);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

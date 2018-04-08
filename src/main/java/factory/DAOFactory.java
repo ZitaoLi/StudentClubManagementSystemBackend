@@ -10,6 +10,7 @@ import singleton.ClubMemberDAOImplSingleton;
 import singleton.NewsCommentDAOImplSingleton;
 import singleton.NewsDAOImplSingleton;
 import singleton.NoticeDAOImplSingleton;
+import singleton.TempDAOImplSingleton;
 import singleton.UserDAOImplSingleton;
 
 public class DAOFactory {
@@ -37,6 +38,8 @@ public class DAOFactory {
         	daoImpl = NoticeDAOImplSingleton.getInstance();
         } else if (type.equalsIgnoreCase("UserDAOImpl")) {
         	daoImpl = UserDAOImplSingleton.getInstance();
+        } else if (type.equalsIgnoreCase("TempDAOImpl")) {
+        	daoImpl = TempDAOImplSingleton.getInstance();
         }
         return daoImpl;
     }

@@ -47,5 +47,10 @@ public class ClubInternalTransaction {
 	public void setBody(String body) {
 		this.body = body;
 	}
+	@Override
+	public String toString() {
+		return "ClubInternalTransaction [id=" + id + ", memberId=" + memberId + ", clubId=" + clubId
+				+ ", transacitonType=" + transacitonType + ", body=" + body + ", createdTime=" + createdTime + "]";
+	}
 	
 }

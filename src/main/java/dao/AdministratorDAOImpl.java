@@ -45,7 +45,7 @@ public class AdministratorDAOImpl implements AdministratorDAO {
 	@Override
 	public Administrator findById(int id) {
 		Administrator administrator= null;
-		String sql = "select id, name, password, created_time from administrator";
+		String sql = "select id, name, password, created_time from administrator where id=?";
 		try{
             conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);

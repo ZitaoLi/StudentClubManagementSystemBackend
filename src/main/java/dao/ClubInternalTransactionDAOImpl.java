@@ -45,9 +45,37 @@ public class ClubInternalTransactionDAOImpl implements ClubInternalTransactionDA
 	}
 
 	@Override
+	public List<ClubInternalTransaction> findByClubId(int clubId) {
+		ClubInternalTransaction transaction = null;
+		List<ClubInternalTransaction> transactions = new ArrayList<ClubInternalTransaction>();
+		String sql = "select id, member_id, club_id, transaction_type, body, created_time from club_internal_transaction where club_id=?";
+		try{
+            conn = DBUtils.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, clubId);
+            rs = ps.executeQuery();
+            while(rs.next()){
+            	transaction = new ClubInternalTransaction();
+            	transaction.setId(rs.getInt(1));
+            	transaction.setMemberId(rs.getInt(2));
+            	transaction.setClubId(rs.getInt(3));
+            	transaction.setTransacitonType(rs.getInt(4));
+            	transaction.setBody(rs.getString(5));
+            	transaction.setCreatedTime(rs.getTimestamp(6));
+            	transactions.add(transaction);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            DBUtils.close(rs, ps, conn);
+        }
+        return transactions;
+	}
+
+	@Override
 	public ClubInternalTransaction findById(int id) {
 		ClubInternalTransaction transaction= null;
-		String sql = "select id, member_id, club_id, transaction_type, body, created_time from club_internal_transaction";
+		String sql = "select id, member_id, club_id, transaction_type, body, created_time from club_internal_transaction where id=?";
 		try{
             conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);

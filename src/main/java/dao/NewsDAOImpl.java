@@ -21,7 +21,7 @@ public class NewsDAOImpl implements NewsDAO {
 	public List<News> findAll() {
 		News news = null;
 		List<News> newsList = new ArrayList<News>();
-		String sql = "select id, administrator_id, user_id, club_id, title, content, image_path, start_num, created_time from news";
+		String sql = "select id, administrator_id, user_id, club_id, title, content, image_path, start_num, created_time, club_name, user_name, user_header_image_path from news";
 		try{
             conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
@@ -37,6 +37,43 @@ public class NewsDAOImpl implements NewsDAO {
             	news.setImagePath(rs.getString(7));
             	news.setStartNum(rs.getInt(8));
             	news.setCreatedTime(rs.getTimestamp(9));
+            	news.setClubName(rs.getString(10));
+            	news.setUserName(rs.getString(11));
+            	news.setUserHeaderImagePath(rs.getString(12));
+            	newsList.add(news);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            DBUtils.close(rs, ps, conn);
+        }
+        return newsList;
+	}
+
+	@Override
+	public List<News> findMultiNews(int num) {
+		News news = null;
+		List<News> newsList = new ArrayList<News>();
+		String sql = "select id, administrator_id, user_id, club_id, title, content, image_path, start_num, created_time, club_name, user_name, user_header_image_path from news limit 0,?";
+		try{
+            conn = DBUtils.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, num);
+            rs = ps.executeQuery();
+            while(rs.next()){
+            	news = new News();
+            	news.setId(rs.getInt(1));
+            	news.setAdministratorId(rs.getInt(2));
+            	news.setUserId(rs.getInt(3));
+            	news.setClubId(rs.getInt(4));
+            	news.setTitle(rs.getString(5));
+            	news.setContent(rs.getString(6));
+            	news.setImagePath(rs.getString(7));
+            	news.setStartNum(rs.getInt(8));
+            	news.setCreatedTime(rs.getTimestamp(9));
+            	news.setClubName(rs.getString(10));
+            	news.setUserName(rs.getString(11));
+            	news.setUserHeaderImagePath(rs.getString(12));
             	newsList.add(news);
             }
         }catch(SQLException e){
@@ -50,7 +87,7 @@ public class NewsDAOImpl implements NewsDAO {
 	@Override
 	public News findById(int id) {
 		News news = null;
-		String sql = "select id, administrator_id, user_id, club_id, title, content, image_path, start_num, created_time from news";
+		String sql = "select id, administrator_id, user_id, club_id, title, content, image_path, start_num, created_time, club_name, user_name, user_header_image_path from news where id=?";
 		try{
             conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
@@ -67,6 +104,9 @@ public class NewsDAOImpl implements NewsDAO {
             	news.setImagePath(rs.getString(7));
             	news.setStartNum(rs.getInt(8));
             	news.setCreatedTime(rs.getTimestamp(9));
+            	news.setClubName(rs.getString(10));
+            	news.setUserName(rs.getString(11));
+            	news.setUserHeaderImagePath(rs.getString(12));
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -78,7 +118,7 @@ public class NewsDAOImpl implements NewsDAO {
 
 	@Override
 	public boolean add(News news) {
-		String sql = "insert into news(administrator_id, user_id, club_id, title, content, image_path, start_num)values(?,?,?,?,?,?,?)";
+		String sql = "insert into news(administrator_id, user_id, club_id, title, content, image_path, start_num, club_name, user_name, user_header_image_path)values(?,?,?,?,?,?,?,?,?,?)";
         try{
             conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
@@ -89,6 +129,9 @@ public class NewsDAOImpl implements NewsDAO {
             ps.setString(5, news.getContent());
             ps.setString(6, news.getImagePath());
             ps.setInt(7, news.getStartNum());
+            ps.setString(8, news.getClubName());
+            ps.setString(9, news.getUserName());
+            ps.setString(10, news.getUserHeaderImagePath());
             ps.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();

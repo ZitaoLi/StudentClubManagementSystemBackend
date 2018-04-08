@@ -46,7 +46,7 @@ public class AdministratorTransactionDAOImpl implements AdministratorTransaction
 	@Override
 	public AdministratorTransaction findById(int id) {
 		AdministratorTransaction administratorTransaction = null;
-		String sql = "select id, administrator_id, transaction_id, is_solved, solved_time from administrator_transaction";
+		String sql = "select id, administrator_id, transaction_id, is_solved, solved_time from administrator_transaction where id=?";
 		try{
             conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);

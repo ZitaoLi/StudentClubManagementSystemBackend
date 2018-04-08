@@ -46,7 +46,7 @@ public class ClubManagementTransactionDAOImpl implements ClubManagementTransacti
 	@Override
 	public ClubManagementTransaction findById(int id) {
 		ClubManagementTransaction transaction= null;
-		String sql = "select id, user_id, transation_type, body, created_time from club_management_transaction";
+		String sql = "select id, user_id, transation_type, body, created_time from club_management_transaction where id=?";
 		try{
             conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);

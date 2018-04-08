@@ -72,6 +72,33 @@ public class ClubDAOImpl implements ClubDAO {
 	}
 
 	@Override
+	public Club findByName(String clubName) {
+		 Club club = null;
+	        String sql = "select id, club_name, club_info, club_bg_image_path, created_time, life_time, member_num from club where club_name=?";
+	        try{
+	            conn = DBUtils.getConnection();
+	            ps = conn.prepareStatement(sql);
+	            ps.setString(1, clubName);
+	            rs = ps.executeQuery();
+	            if(rs.next()){
+	            	club = new Club();
+	            	club.setId(rs.getInt(1));
+	            	club.setClubName(rs.getString(2));
+	            	club.setClubInfo(rs.getString(3));
+	            	club.setClubBgImagePath(rs.getString(4));
+	            	club.setCreatedTime(rs.getTimestamp(5));
+	            	club.setLifeTime(rs.getInt(6));
+	            	club.setMemberNum(rs.getInt(7));
+	            }
+	        }catch(SQLException e){
+	            e.printStackTrace();
+	        }finally{
+	            DBUtils.close(rs, ps, conn);
+	        }
+	        return club;
+	}
+
+	@Override
 	public boolean add(Club club) {
 		String sql = "insert into club(club_name, club_info, club_bg_image_path)values(?,?,?)";
         try{
